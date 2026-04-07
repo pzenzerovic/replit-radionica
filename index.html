@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vibe Coding s Replitom — Vodič za samostalan rad</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pri: #2E5DA3; --pri-l: #4A78C0; --pri-p: #EFF4FB; --pri-m: #A8C0E0;
+  --acc: #C96A30; --acc-p: #FDF2EB;
+  --teal: #2A8B8B; --teal-p: #E5F4F4;
+  --green: #2E7D52; --green-p: #EAF5EE;
+  --red: #B83232; --red-p: #FDECEB;
+  --yel: #9A7000; --yel-p: #FDF8E1;
+  --bg: #F7F9FC; --surf: #fff; --brd: #E2E8F0;
+  --tx: #1C2333; --tx-m: #4A5568; --tx-l: #718096;
+  --r: 10px; --r-s: 6px;
+  --sh: 0 1px 3px rgba(0,0,0,.07), 0 4px 12px rgba(46,93,163,.06);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--tx); font-size: 15px; line-height: 1.65; }
+
+/* SIDEBAR */
+.sidebar { position: fixed; left: 0; top: 0; bottom: 0; width: 252px; background: var(--pri); color: #fff; overflow-y: auto; z-index: 100; display: flex; flex-direction: column; padding-bottom: 24px; }
+.sb-logo { padding: 24px 18px 18px; border-bottom: 1px solid rgba(255,255,255,.12); }
+.sb-badge { display: inline-flex; align-items: center; gap: 5px; background: var(--acc); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 9px; border-radius: 20px; margin-bottom: 9px; }
+.sb-logo h2 { font-size: 15px; font-weight: 800; line-height: 1.3; }
+.sb-logo p { font-size: 11px; color: rgba(255,255,255,.5); margin-top: 3px; }
+.nav-sec { padding: 14px 10px 2px; }
+.nav-sec-label { font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.38); padding: 0 8px; margin-bottom: 4px; }
+.nav-a { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: var(--r-s); color: rgba(255,255,255,.72); text-decoration: none; font-size: 13px; font-weight: 500; transition: all .15s; }
+.nav-a:hover, .nav-a.active { background: rgba(255,255,255,.12); color: #fff; }
+.nav-n { width: 19px; height: 19px; border-radius: 50%; background: rgba(255,255,255,.14); display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+.nav-n.acc { background: var(--acc); }
+
+/* MAIN */
+.main { margin-left: 252px; min-height: 100vh; }
+
+/* COVER */
+.cover { background: linear-gradient(135deg, #1E3A6E 0%, #2E5DA3 60%, #1A2F5C 100%); padding: 64px max(56px, calc((100% - 1150px) / 2)) 56px; position: relative; overflow: hidden; }
+.cover::before { content: ''; position: absolute; top: -60px; right: -60px; width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,106,48,.15) 0%, transparent 70%); pointer-events: none; }
+.cover-chip { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2); border-radius: 20px; padding: 5px 13px; font-size: 12px; font-weight: 500; color: rgba(255,255,255,.8); margin-bottom: 22px; }
+.cover h1 { font-size: clamp(30px,4vw,48px); font-weight: 800; color: #fff; line-height: 1.1; max-width: 560px; margin-bottom: 16px; }
+.cover h1 span { color: #FBA05A; }
+.cover-desc { font-size: 16px; color: rgba(255,255,255,.65); max-width: 480px; line-height: 1.6; margin-bottom: 32px; }
+.cover-meta { display: flex; gap: 28px; flex-wrap: wrap; }
+.cmi label { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; color: rgba(255,255,255,.4); font-weight: 600; display: block; }
+.cmi span { font-size: 13px; color: rgba(255,255,255,.82); font-weight: 500; }
+
+/* SECTIONS */
+.sec { padding: 52px max(56px, calc((100% - 1150px) / 2)); border-bottom: 1px solid var(--brd); }
+.sec:last-child { border-bottom: none; }
+.sec-hdr { display: flex; align-items: center; gap: 14px; margin-bottom: 30px; }
+.sec-num { width: 40px; height: 40px; background: var(--pri); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; flex-shrink: 0; }
+.sec-num.acc { background: var(--acc); }
+.sec-num.teal { background: var(--teal); }
+.sec-num.green { background: var(--green); }
+.sec-ttl h2 { font-size: 22px; font-weight: 800; line-height: 1.2; }
+.sec-ttl p { font-size: 12px; color: var(--tx-l); margin-top: 2px; }
+h3 { font-size: 16px; font-weight: 700; margin: 28px 0 10px; }
+h4 { font-size: 13px; font-weight: 600; color: var(--pri); text-transform: uppercase; letter-spacing: .05em; margin: 20px 0 7px; }
+p { margin-bottom: 12px; color: var(--tx-m); }
+p:last-child { margin-bottom: 0; }
+strong { color: var(--tx); font-weight: 600; }
+a { color: var(--pri); text-decoration: none; font-weight: 500; }
+a:hover { text-decoration: underline; }
+hr.div { border: none; border-top: 1px solid var(--brd); margin: 28px 0; }
+
+/* CALLOUT */
+.callout { border-radius: var(--r); padding: 14px 18px; margin: 16px 0; display: flex; gap: 12px; align-items: flex-start; }
+.callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+.callout-body strong { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 3px; }
+.callout-body p { margin: 0; font-size: 13.5px; }
+.tip { background: var(--pri-p); border-left: 4px solid var(--pri-l); }
+.tip .callout-body strong { color: var(--pri); }
+.info { background: var(--teal-p); border-left: 4px solid var(--teal); }
+.info .callout-body strong { color: var(--teal); }
+.warn { background: var(--yel-p); border-left: 4px solid var(--yel); }
+.warn .callout-body strong { color: var(--yel); }
+.ok { background: var(--green-p); border-left: 4px solid var(--green); }
+.ok .callout-body strong { color: var(--green); }
+
+/* CARDS */
+.card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 16px 0; }
+.card { background: var(--surf); border: 1px solid var(--brd); border-radius: var(--r); padding: 18px 20px; box-shadow: var(--sh); }
+.card-icon { font-size: 22px; margin-bottom: 8px; }
+.card h4 { font-family: inherit; font-size: 13px; font-weight: 700; color: var(--tx); text-transform: none; letter-spacing: 0; margin: 0 0 5px; }
+.card p { font-size: 13px; margin: 0; }
+.card a { font-size: 12px; display: block; margin-top: 7px; }
+.c-pri { border-top: 3px solid var(--pri); }
+.c-acc { border-top: 3px solid var(--acc); }
+.c-teal { border-top: 3px solid var(--teal); }
+.c-green { border-top: 3px solid var(--green); }
+
+/* STEPS */
+.steps { list-style: none; }
+.step { display: flex; gap: 14px; margin-bottom: 18px; align-items: flex-start; }
+.step-n { width: 28px; height: 28px; background: var(--pri); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+.step-n.acc { background: var(--acc); }
+.step-ttl { font-weight: 700; font-size: 14px; color: var(--tx); margin-bottom: 3px; }
+.step-desc { font-size: 13.5px; color: var(--tx-m); }
+
+/* SCREENSHOT */
+.ss-wrap { margin: 20px 0; border-radius: var(--r); overflow: hidden; border: 1px solid var(--brd); box-shadow: 0 2px 16px rgba(0,0,0,.08); }
+.ss-wrap img { width: 100%; display: block; }
+.ss-cap { background: var(--bg); padding: 9px 14px; font-size: 13px; color: var(--tx-m); border-top: 1px solid var(--brd); line-height: 1.5; }
+.ss-step { display: inline-flex; align-items: center; gap: 7px; background: var(--pri); color: #fff; padding: 3px 12px 3px 5px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 10px; }
+.ss-step-n { width: 20px; height: 20px; background: rgba(255,255,255,.22); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
+
+/* PROMPT BOX */
+.prompt { background: linear-gradient(135deg, var(--pri-p), #fff); border: 2px dashed var(--pri-m); border-radius: var(--r); padding: 16px 20px; margin: 12px 0; }
+.prompt-lbl { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--pri); margin-bottom: 7px; }
+.prompt-txt { font-family: 'JetBrains Mono', monospace; font-size: 12.5px; color: var(--tx); line-height: 1.65; white-space: pre-wrap; }
+
+/* TABLE */
+.tbl { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 14px 0; }
+.tbl th { background: var(--pri); color: #fff; padding: 9px 13px; text-align: left; font-weight: 600; font-size: 12px; }
+.tbl td { padding: 9px 13px; border-bottom: 1px solid var(--brd); color: var(--tx-m); }
+.tbl tr:hover td { background: var(--pri-p); }
+.tbl tr:last-child td { border-bottom: none; }
+
+/* API CARD */
+.api-card { background: var(--surf); border: 1px solid var(--brd); border-radius: var(--r); overflow: hidden; margin: 16px 0; box-shadow: var(--sh); }
+.api-hdr { padding: 13px 18px; display: flex; align-items: center; justify-content: space-between; }
+.api-name { font-size: 15px; font-weight: 700; color: #fff; }
+.api-badge { background: rgba(255,255,255,.2); color: #fff; font-size: 10px; font-weight: 700; padding: 2px 9px; border-radius: 20px; letter-spacing: .05em; text-transform: uppercase; }
+.api-body { padding: 14px 18px; }
+.api-meta { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 9px; font-size: 12px; color: var(--tx-m); }
+.api-meta span { font-weight: 600; color: var(--tx); }
+.api-desc { font-size: 13.5px; color: var(--tx-m); margin-bottom: 10px; }
+.tags { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+.tag { background: var(--pri-p); color: var(--pri); font-size: 11px; font-weight: 600; padding: 2px 9px; border-radius: 20px; }
+.tag.acc { background: var(--acc-p); color: var(--acc); }
+.url-pill { display: inline-flex; align-items: center; gap: 5px; background: #1C2333; color: #7DD3FC; font-family: 'JetBrains Mono', monospace; font-size: 11.5px; padding: 5px 12px; border-radius: 5px; margin: 3px 0; word-break: break-all; }
+.url-pill::before { content: '🔗'; font-size: 10px; }
+.idea { background: var(--bg); border: 1px solid var(--brd); border-radius: var(--r-s); padding: 10px 14px; margin-top: 10px; }
+.idea-lbl { font-size: 10px; text-transform: uppercase; letter-spacing: .08em; font-weight: 700; color: var(--tx-l); margin-bottom: 4px; }
+.idea-txt { font-size: 13px; color: var(--tx-m); }
+
+/* TWO COL */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+
+/* CHECKLIST */
+.chk { list-style: none; }
+.chk li { display: flex; align-items: flex-start; gap: 9px; padding: 7px 0; border-bottom: 1px solid var(--brd); font-size: 14px; color: var(--tx-m); }
+.chk li:last-child { border-bottom: none; }
+.chk-box { width: 16px; height: 16px; border: 2px solid var(--brd); border-radius: 3px; flex-shrink: 0; margin-top: 3px; }
+
+/* FOOTER CTA */
+.cta { background: linear-gradient(135deg, var(--pri), #1A2F5C); border-radius: var(--r); padding: 32px 36px; margin-top: 28px; text-align: center; }
+.cta .icon { font-size: 28px; margin-bottom: 10px; }
+.cta h3 { font-size: 20px; color: #fff; margin: 0 0 6px; }
+.cta p { font-size: 13px; color: rgba(255,255,255,.6); margin-bottom: 18px; }
+.cta a { display: inline-block; padding: 10px 24px; border-radius: 7px; font-weight: 700; font-size: 13.5px; text-decoration: none; margin: 0 5px; }
+.cta-main { background: var(--acc); color: #fff; }
+.cta-sec { background: rgba(255,255,255,.13); color: #fff; }
+
+@media print { .sidebar { display: none !important; } .main { margin-left: 0 !important; } }
+@media (max-width: 860px) { .sidebar { display: none; } .main { margin-left: 0; } .cover { padding: 36px 22px 36px; } .sec { padding: 36px 22px; } .two-col { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-badge">⚡ VCL 2025/26</div>
+    <h2>Vibe Coding<br>s Replitom</h2>
+    <p>Vodič za samostalan rad</p>
+  </div>
+  <div class="nav-sec">
+    <div class="nav-sec-label">Uvod</div>
+    <a class="nav-a" href="#s0"><div class="nav-n">0</div> O ovom vodiču</a>
+    <a class="nav-a" href="#s1"><div class="nav-n">1</div> Što je vibe coding?</a>
+    <a class="nav-a" href="#s2"><div class="nav-n">2</div> Replit: sučelje i modovi</a>
+  </div>
+  <div class="nav-sec">
+    <div class="nav-sec-label">Projekti</div>
+    <a class="nav-a" href="#s3"><div class="nav-n acc">3</div> Hrvatski blagdanski kalendar</a>
+    <a class="nav-a" href="#s4"><div class="nav-n">4</div> Kviz iz školskog predmeta</a>
+    <a class="nav-a" href="#s5"><div class="nav-n">5</div> Napredni projekti</a>
+  </div>
+  <div class="nav-sec">
+    <div class="nav-sec-label">Resursi</div>
+    <a class="nav-a" href="#s6"><div class="nav-n">6</div> Javni API-jevi za nastavu</a>
+    <a class="nav-a" href="#s7"><div class="nav-n">7</div> Pronalazak novih izvora</a>
+    <a class="nav-a" href="#s8"><div class="nav-n acc">8</div> Resursi i daljnje učenje</a>
+  </div>
+</nav>
+
+<main class="main">
+
+<!-- COVER -->
+<header class="cover">
+  <div class="cover-chip">📖 Vodič za samostalan rad · Travanj 2026.</div>
+  <h1>Vibe Coding<br>s <span>Replitom</span></h1>
+  <p class="cover-desc">Praktični vodič za izgradnju web-aplikacija bez pisanja koda — od prve ideje do objavljene aplikacije dostupne na javnom internetu.</p>
+  <div class="cover-meta">
+    <div class="cmi"><label>Razina</label><span>Početna — bez koda</span></div>
+    <div class="cmi"><label>Platforma</label><span>replit.com</span></div>
+    <div class="cmi"><label>Organizacija</label><span>IRIM — Vibe Coding Liga</span></div>
+  </div>
+</header>
+
+<!-- S0 -->
+<section class="sec" id="s0">
+  <div class="sec-hdr">
+    <div class="sec-num">0</div>
+    <div class="sec-ttl"><h2>O ovom vodiču</h2><p>Što ćete naučiti i što vam treba</p></div>
+  </div>
+
+  <p>Ovaj vodič nastavlja se na rad s AI alatima koje ste već upoznali u sklopu Vibe Coding Lige. Iza vas su prvi susreti s Claudeom i razumijevanje Claude Artefakata. Sada idemo korak dalje: od interaktivnih artefakata u chatu do <strong>funkcionalne web-aplikacije dostupne na javnom internetu.</strong></p>
+
+  <h3>Što ćete naučiti</h3>
+  <div class="card-grid">
+    <div class="card c-pri"><div class="card-icon">🤖</div><h4>Replit Agent</h4><p>Kako opisati aplikaciju prirodnim jezikom i pustiti AI da je izgradi korak po korak.</p></div>
+    <div class="card c-acc"><div class="card-icon">🔄</div><h4>Iterativno građenje</h4><p>Kako postepeno dodavati funkcije i dorađivati projekt bez ponovnog pisanja.</p></div>
+    <div class="card c-teal"><div class="card-icon">🌐</div><h4>API integracije</h4><p>Kako priključiti vanjske izvore podataka u aplikaciju — bez ijednog retka koda.</p></div>
+    <div class="card c-green"><div class="card-icon">🚀</div><h4>Objava</h4><p>Kako objaviti aplikaciju i dobiti javni URL koji možete podijeliti s učenicima ili kolegama.</p></div>
+  </div>
+
+  <h3>Što vam je potrebno</h3>
+  <div class="card-grid">
+    <div class="card c-pri"><div class="card-icon">💻</div><h4>Računalo s preglednikom</h4><p>Chrome, Firefox ili Edge. Replit radi u pregledniku bez ikakvih instalacija, uključujući Chromebook.</p></div>
+    <div class="card c-acc"><div class="card-icon">📧</div><h4>Email za registraciju</h4><p>Preporučujemo Google Sign-In za brži postupak.</p></div>
+    <div class="card c-teal"><div class="card-icon">🌐</div><h4>Internetska veza</h4><p>Sve se odvija u oblaku — ništa se ne instalira lokalno.</p></div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>Preporuka</strong><p>Registrirajte Replit račun unaprijed na <a href="https://replit.com" target="_blank">replit.com</a> klikom na <em>Sign Up → Continue with Google</em>.</p></div>
+  </div>
+</section>
+
+<!-- S1 -->
+<section class="sec" id="s1">
+  <div class="sec-hdr">
+    <div class="sec-num">1</div>
+    <div class="sec-ttl"><h2>Što je vibe coding?</h2><p>Filozofija i principi novog pristupa razvoju aplikacija</p></div>
+  </div>
+
+  <p>U veljači 2025. istraživač Andrej Karpathy (suosnivač OpenAI-a) opisao je pristup koji mnogi već primjenjuju: <em>„Potpuno prepuštam kodu. Prihvaćam vibes. AI gradi, ja usmjeravam."</em> Taj opis dao je ime novom načinu rada s računalima.</p>
+
+  <div class="callout info">
+    <div class="callout-icon">🎯</div>
+    <div class="callout-body"><strong>Definicija</strong><p><strong>Vibe coding</strong> je pristup razvoju softvera u kojemu čovjek opisuje što želi postići prirodnim jezikom, a AI piše i popravlja kod. Čovjek upravlja vizijom, testira rezultat i iterira — ali ne piše kod ručno.</p></div>
+  </div>
+
+  <h3>5 vještina efektivnog vibe codinga</h3>
+  <p>Replit i DeepLearning.AI definirali su okvir od pet temeljnih vještina:</p>
+
+  <table class="tbl">
+    <thead><tr><th>Vještina</th><th>Što znači u praksi</th></tr></thead>
+    <tbody>
+      <tr><td>🧠 <strong>Razmišljaj</strong></td><td>Planiraj što želiš postići prije nego pošalješ prvi prompt</td></tr>
+      <tr><td>🧩 <strong>Koristi okvire</strong></td><td>Iskoristi gotove alate i API-jeve umjesto da gradiš od nule</td></tr>
+      <tr><td>📌 <strong>Checkpoint</strong></td><td>Spremi radnu verziju čim nešto prorade</td></tr>
+      <tr><td>🔍 <strong>Debug</strong></td><td>Greške ispravljaj kroz razgovor, ne pokušavanjem nasumičnih izmjena</td></tr>
+      <tr><td>📝 <strong>Kontekst</strong></td><td>Daj AI-ju dovoljno informacija da shvati što točno trebaš</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Vibe coding vs. klasično programiranje</h3>
+  <table class="tbl">
+    <thead><tr><th>Aspekt</th><th>Klasično programiranje</th><th>Vibe coding</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Što radite vi</strong></td><td>Pišete svaki redak koda</td><td>Opisujete što želite</td></tr>
+      <tr><td><strong>Što radi AI</strong></td><td>Pomaže, predlaže</td><td>Gradi cijelu aplikaciju</td></tr>
+      <tr><td><strong>Potrebno predznanje</strong></td><td>Programski jezik, sintaksa</td><td>Jasna komunikacija</td></tr>
+      <tr><td><strong>Brzina prvog rezultata</strong></td><td>Sati, dani</td><td>2–5 minuta</td></tr>
+      <tr><td><strong>Tko može</strong></td><td>Programeri</td><td>Svi koji mogu jasno opisati cilj</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Zlatna pravila vibe codinga</h3>
+  <ul class="chk">
+    <li><div class="chk-box"></div><div><strong>Plan mode za složene projekte.</strong> Prije nego Agent počne graditi nešto veće, prebacite se u Plan mode. Opišite što želite, uskladite pristup — i tek onda kliknite <em>Start Building</em>. Štedi kredite i sprečava krivi smjer.</div></li>
+    <li><div class="chk-box"></div><div><strong>Počnite jednostavno.</strong> Opišite minimalnu verziju aplikacije. Kompleksnost dodajte iterativno, korak po korak.</div></li>
+    <li><div class="chk-box"></div><div><strong>Budite specifični.</strong> <em>„Napravi lijepu stranicu"</em> je loš prompt. <em>„Napravi stranicu s bijelom pozadinom, plavim naslovom i tablicom s 5 podataka"</em> je dobar prompt.</div></li>
+    <li><div class="chk-box"></div><div><strong>Testirajte odmah — i na mobitelu.</strong> Čim AI završi, kliknite Preview i provjerite radi li aplikacija. Koristite <em>Screen size</em> u Preview panelu za mobilni prikaz.</div></li>
+    <li><div class="chk-box"></div><div><strong>Checkpoint = spasenje.</strong> Svaki put kad nešto radi — napravite checkpoint. Uvijek se možete vratiti na tu verziju.</div></li>
+    <li><div class="chk-box"></div><div><strong>Doom loop? Plan mode pa rollback!</strong> Ako AI ne može popraviti grešku u 2 pokušaja, prebacite se u Plan mode za dijagnozu. Ako ni to ne pomogne — rollback na zadnji checkpoint.</div></li>
+  </ul>
+</section>
+
+<!-- S2 -->
+<section class="sec" id="s2">
+  <div class="sec-hdr">
+    <div class="sec-num acc">2</div>
+    <div class="sec-ttl"><h2>Replit: sučelje i modovi</h2><p>Pregled platforme i njezinih ključnih komponenti</p></div>
+  </div>
+
+  <p>Replit je platforma u oblaku koja u jednom tabu preglednika objedinjuje sve: editor koda, AI agenta koji gradi aplikacije, pregled u živo i objavu na internet. <strong>Ništa se ne instalira — sve radi u pregledniku.</strong></p>
+
+  <div class="card-grid">
+    <div class="card c-pri"><div class="card-icon">🤖</div><h4>Replit Agent</h4><p>Jedini AI alat u Replitu. Opisujete aplikaciju prirodnim jezikom, Agent gradi cijelu strukturu. Radi u Lite i Autonomous modu. Razumije i hrvatski.</p></div>
+    <div class="card c-acc"><div class="card-icon">🗺️</div><h4>Plan mode</h4><p>Mod unutar Agenta gdje AI <strong>ne mijenja kod</strong> — samo razmišlja s vama. Aktivira se iz <em>Plan / Build</em> padajućeg izbornika u chat polju.</p></div>
+    <div class="card c-teal"><div class="card-icon">📌</div><h4>Checkpoints</h4><p>Automatski „save pointovi" projekta. Rollback = povratak na bilo koji checkpoint jednim klikom. Na besplatnom planu dostupno je prvih 10.</p></div>
+    <div class="card c-green"><div class="card-icon">🚀</div><h4>Deployments</h4><p>Objavite aplikaciju jednim klikom. Static deploy je besplatan i daje javni URL (npr. <em>moja-app.replit.app</em>).</p></div>
+  </div>
+
+  <h3>Tlocrt sučelja</h3>
+  <p>Kad otvorite Repl (projekt), vidite tri zone:</p>
+  <ul class="steps">
+    <li class="step"><div class="step-n">L</div><div><div class="step-ttl">Agent panel (lijevo)</div><div class="step-desc">Ovdje pišete promptove. U donjem lijevom kutu je <em>Plan / Build dropdown</em> — ključni izbornik. Build = gradi kod. Plan = samo razmišlja, bez izmjena.</div></div></li>
+    <li class="step"><div class="step-n">S</div><div><div class="step-ttl">Editor i datoteke (sredina)</div><div class="step-desc">Vidite kod koji je Agent generirao. Ne trebate ga mijenjati ručno — dovoljno je znati da postoji.</div></div></li>
+    <li class="step"><div class="step-n">D</div><div><div class="step-ttl">Preview panel (desno)</div><div class="step-desc">Živi prikaz aplikacije. Gumb <em>Screen size</em> u alatnoj traci omogućuje testiranje mobilnog prikaza. Ikona vanjskog linka otvara aplikaciju u novom tabu.</div></div></li>
+  </ul>
+
+  <h3>Agent modovi</h3>
+  <table class="tbl">
+    <thead><tr><th>Mod</th><th>Što radi</th><th>Kada koristiti</th><th>Krediti</th></tr></thead>
+    <tbody>
+      <tr><td><strong>⚡ Lite</strong></td><td>Brze izmjene, pitanja, objašnjenja</td><td>Sitni popravci, promjena boje ili teksta</td><td>Najniži</td></tr>
+      <tr><td><strong>🔧 Autonomous – Economy</strong></td><td>Autonomna gradnja, optimiziran za cijenu</td><td>Učenje, eksperimentiranje — <strong>preporučeno</strong></td><td>Srednji</td></tr>
+      <tr><td><strong>⚡ Autonomous – Power</strong></td><td>Gradnja s najsposobnijim modelima</td><td>Složeni projekti kad Economy nije dovoljan</td><td>Viši (~3×)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout tip">
+    <div class="callout-icon">💡</div>
+    <div class="callout-body"><strong>Preporuka</strong><p>Koristite <strong>Autonomous – Economy</strong> za gradnju projekata. Economy i Power dostupni su na Core planu; na besplatnom Starter planu dostupan je samo Lite.</p></div>
+  </div>
+
+  <h3>Plan mode — razmišljaj prije nego gradiš</h3>
+  <p>U Plan modu Agent <strong>ne smije pisati ni mijenjati kod</strong> — može samo čitati projekt i predlagati strukturu. Tek kad odobrite plan klikom na <em>Start Building</em>, Agent prelazi u Build mode.</p>
+
+  <table class="tbl">
+    <thead><tr><th>Situacija</th><th>Plan mode?</th><th>Zašto</th></tr></thead>
+    <tbody>
+      <tr><td>Počinjete složeniji projekt</td><td>✅ Da</td><td>Uskladite očekivanja prije trošenja kredita</td></tr>
+      <tr><td>Nešto ne radi, ne znate zašto</td><td>✅ Da</td><td>Agent analizira problem bez rizika pogoršavanja</td></tr>
+      <tr><td>Dodajete novu veću funkciju</td><td>✅ Da</td><td>Agent predlaže integraciju bez rušenja onoga što radi</td></tr>
+      <tr><td>Mala izmjena (boja, tekst, gumb)</td><td>❌ Ne</td><td>Idite direktno u Build s Lite modom</td></tr>
+      <tr><td>Doom loop — Agent se vrti u krug</td><td>✅ Da</td><td>Dijagnosticirajte bez daljnjih pokušaja koji troše kredite</td></tr>
+    </tbody>
+  </table>
+
+  <div class="callout warn">
+    <div class="callout-icon">⚠️</div>
+    <div class="callout-body"><strong>Javnost projekata</strong><p>Na besplatnom planu, sav vaš kod je vidljiv svima koji imaju link. Nemojte unositi lozinke, osobne podatke učenika niti osjetljive informacije u kod.</p></div>
+  </div>
+</section>
+
+<!-- S3 -->
+<section class="sec" id="s3">
+  <div class="sec-hdr">
+    <div class="sec-num acc">3</div>
+    <div class="sec-ttl"><h2>Hrvatski blagdanski kalendar</h2><p>Kompletan Replit workflow — korak po korak</p></div>
+  </div>
+
+  <p>Ovaj primjer provodi vas kroz <strong>cijeli Replit workflow</strong> — od prazne stranice do objavljene aplikacije s pravim podacima. Svaki korak demonstrira jednu ključnu funkcionalnost platforme.</p>
+  <p>Gradimo web-aplikaciju koja dohvaća sve hrvatske državne blagdane za 2026. iz javnog API-ja i prikazuje ih s odbrojavanjima i vizualno istaknutim sljedećim blagdanom.</p>
+
+  <hr class="div">
+
+  <!-- KORAK 1 -->
+  <div class="ss-step"><div class="ss-step-n">1</div> Pokretanje projekta</div>
+  <p>Idite na <a href="https://replit.com" target="_blank">replit.com</a> i prijavite se. Na početnoj stranici vidite centralni okvir s pitanjem <em>„Hi [ime], what do you want to make?"</em> — tu počinje svaki novi projekt.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2004.47.18.png" alt="Početna stranica Replita" loading="lazy">
+    <div class="ss-cap">Početna stranica Replita s centralnim poljem za unos. Replit predlaže kategorije projekata, ali vi ćete opisati što trebate vlastitim riječima.</div>
+  </div>
+
+  <!-- KORAK 2 -->
+  <div class="ss-step"><div class="ss-step-n">2</div> Pisanje inicijalnog prompta</div>
+  <p>U polje za unos upišite prompt koji opisuje aplikaciju. Ključno je uključiti <strong>konkretan URL API-ja</strong> — Agent ga koristi kao izvor podataka. Možete otvoriti URL u novom tabu i vidjeti točno koje podatke Agent dobiva: <a href="https://date.nager.at/api/v3/PublicHolidays/2026/HR" target="_blank">date.nager.at/api/v3/PublicHolidays/2026/HR</a></p>
+
+  <div class="prompt">
+    <div class="prompt-lbl">✏️ Upišite u polje za unos</div>
+    <div class="prompt-txt">Napravi web aplikaciju koja prikazuje sve hrvatske blagdane u 2026. godini.
+
+Koristi Nager.Date API — URL za dohvat podataka:
+https://date.nager.at/api/v3/PublicHolidays/2026/HR
+
+Za svaki blagdan prikaži:
+- Datum u formatu DD.MM.YYYY.
+- Naziv blagdana na hrvatskom (polje "localName")
+- Koliko dana je ostalo do tog blagdana
+- Oznaku je li prošao ili je nadolazeći
+
+Koristi crvenu i bijelu boju. Neka bude vizualno atraktivno.</div>
+  </div>
+
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2004.52.46.png" alt="Prompt u polju za unos" loading="lazy">
+    <div class="ss-cap">Prompt unesen u polje za unos — vidljiv je opis aplikacije i URL API-ja. Replit je prepoznao API URL i nudi brzi pregled sadržaja.</div>
+  </div>
+
+  <!-- KORAK 3 -->
+  <div class="ss-step"><div class="ss-step-n">3</div> Agent planira i gradi</div>
+  <p>Nakon slanja prompta, Agent prikazuje što namjerava napraviti i počinje graditi aplikaciju. Ovaj proces traje 1–3 minute. Pratite poruke u lijevom panelu — Agent opisuje svaki korak koji poduzima.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2004.53.38.png" alt="Agent gradi aplikaciju" loading="lazy">
+    <div class="ss-cap">Agent je prepoznao prompt, sažeo ga i počeo graditi. Desno se prikazuje editor s datotekama koje Agent kreira. Ne trebate ništa raditi — samo čekajte.</div>
+  </div>
+
+  <!-- KORAK 4 -->
+  <div class="ss-step"><div class="ss-step-n">4</div> Prva gotova verzija</div>
+  <p>Kad Agent završi, Preview panel desno prikazuje radnu aplikaciju.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2004.55.55.png" alt="Prva gotova verzija aplikacije" loading="lazy">
+    <div class="ss-cap">Aplikacija prikazuje 14 hrvatskih blagdana dohvaćenih s API-ja — datumi, nazivi, odbrojavanja i oznake. Gumb "Open Publishing" omogućuje objavu na javnom URL-u.</div>
+  </div>
+
+  <!-- NAPOMENA MODOVI -->
+  <div class="callout info">
+    <div class="callout-icon">🔧</div>
+    <div class="callout-body"><strong>Odabir Agent moda</strong><p>Za daljnji rad kliknite na padajući izbornik u Agent panelu. Preporučuje se <strong>Autonomous – Economy</strong> za gradnju novih funkcija, i <strong>Lite</strong> za sitne ispravke poput promjene boje.</p></div>
+  </div>
+  <div class="ss-wrap" style="max-width:360px">
+    <img src="Screenshot%202026-04-07%20at%2004.58.58%20-%20cijeli.png" alt="Agent modovi" loading="lazy">
+    <div class="ss-cap">Pregled dostupnih Agent modova. Autonomous Economy preporučen je za gradnju projekata uz razumnu potrošnju kredita.</div>
+  </div>
+
+  <!-- KORAK 5 -->
+  <div class="ss-step"><div class="ss-step-n">5</div> Iteracija dizajna — Canvas mode</div>
+  <p>Replit ima <strong>Canvas mode</strong> koji omogućuje generiranje vizualnih dizajn varijanti aplikacije. Agent izrađuje nacrte paralelno — desktop i mobilni prikaz za svaku varijantu — koje potom možete pregledati i odabrati za izgradnju.</p>
+  <p>Upišite prompt na engleskom (Canvas mode bolje reagira na engleski):</p>
+
+  <div class="prompt">
+    <div class="prompt-lbl">✏️ Upišite u Agent chat</div>
+    <div class="prompt-txt">Make 2 variations of the design of the app you built. Use minimalistic clean design.
+Disregard previous colors. For each design show me the desktop and mobile view.</div>
+  </div>
+
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2005.01.39.png" alt="Agent gradi dizajn varijante" loading="lazy">
+    <div class="ss-cap">Agent gradi četiri okvira istovremeno — desktop i mobilni prikaz za svaku varijantu. Na platnu se pojavljuju radni okviri koji se popunjavaju u realnom vremenu.</div>
+  </div>
+
+  <!-- KORAK 6 -->
+  <div class="ss-step"><div class="ss-step-n">6</div> Pregled dizajn varijanti</div>
+  <p>Kad Agent završi, na platnu su prikazane obje varijante — svaka u desktop i mobilnoj verziji. Možete usporediti estetiku i čitljivost i odlučiti koja bolje odgovara vašoj primjeni.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2005.04.32.png" alt="Dvije dizajn varijante" loading="lazy">
+    <div class="ss-cap">Varijanta 1 (Airy Light) — svjetla pozadina, prostrana tipografija. Varijanta 2 (Dark Structured) — tamna pozadina, precizniji prikaz datuma. Obje prikazane u desktop i mobilnoj veličini.</div>
+  </div>
+
+  <!-- KORAK 7 -->
+  <div class="ss-step"><div class="ss-step-n">7</div> Odabir i izgradnja dizajna</div>
+  <p>Kliknite na varijantu koja vam se sviđa da je selektirate, a zatim iz padajućeg izbornika odaberite <strong>Build this design</strong>.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2005.05.28.png" alt="Odabir dizajna za izgradnju" loading="lazy">
+    <div class="ss-cap">Odabir opcije "Build this design" na selektiranoj varijanti. Agent će implementirati vizualni stil iz nacrta u stvarnu aplikaciju.</div>
+  </div>
+
+  <!-- KORAK 8 -->
+  <div class="ss-step"><div class="ss-step-n">8</div> Aplikacija ažurirana prema nacrtu</div>
+  <p>Agent primjenjuje odabrani dizajn na živu aplikaciju. API podaci ostaju isti — mijenja se samo vizualni prikaz.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2005.07.25.png" alt="Aplikacija ažurirana" loading="lazy">
+    <div class="ss-cap">Aplikacija sada vizualno odgovara odabranom nacrtu — neutralna paleta, čista tipografija. Podaci o blagdanima i odbrojavanjima identični su kao u prvoj verziji.</div>
+  </div>
+
+  <!-- KORAK 9 -->
+  <div class="ss-step"><div class="ss-step-n">9</div> Otkrivanje grešaka — Plan mod</div>
+  <p>U kompleksnijim aplikacijama greške su neizbježne. Kad se pojavi problem (npr. krivi broj dana do blagdana, greška u prikazu), prebacite se u <strong>Plan mod</strong> prije nego tražite ispravak. Agent analizira kod bez ikakvih izmjena i predlaže konkretan plan.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2005.26.47.png" alt="Plan mod - dijagnoza greške" loading="lazy">
+    <div class="ss-cap">Agent u Plan modu identificirao je bug i stvorio konkretan task plan. Prikazano je što treba promijeniti, gdje i zašto — bez ijedne izmjene u kodu.</div>
+  </div>
+
+  <!-- KORAK 10 -->
+  <div class="ss-step"><div class="ss-step-n">10</div> Detalji plana ispravka</div>
+  <p>Plan mod prikazuje detaljan opis greške, njezin uzrok i predloženo rješenje. Tek kad prihvatite plan klikom na <em>Build here</em>, Agent gradi ispravak. Ovaj pristup sprečava da Agent napravi više štete nego koristi.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2005.27.02.png" alt="Detalji plana ispravka" loading="lazy">
+    <div class="ss-cap">Detalji plana: točno koji file treba promijeniti, koji je uzrok greške i kako izgleda ispravna logika. Odobravanjem plana Agent gradi ispravak.</div>
+  </div>
+
+  <!-- KORAK 11 -->
+  <div class="ss-step"><div class="ss-step-n">11</div> Testiranje na mobilnim uređajima</div>
+  <p>U Preview panelu kliknite ikonu <strong>Screen size</strong> u gornjoj traci. Otvara se padajući izbornik s popularnim uređajima — iPhone, Android, tableti. Provjerite aplikaciju na barem jednom mobilnom profilu.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2005.29.43.png" alt="Mobilni prikaz aplikacije" loading="lazy">
+    <div class="ss-cap">Mobilni prikaz aplikacije — layout se automatski prilagođava malom ekranu. Vidljivi su blagdani s produženim vikendom i svi detalji.</div>
+  </div>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2005.29.52.png" alt="Screen size padajući izbornik" loading="lazy">
+    <div class="ss-cap">Padajući izbornik Screen size nudi sve popularne uređaje: iPhone modele, Pixel, Samsung Galaxy. Svaki odabir trenutno mijenja širinu Preview prozora.</div>
+  </div>
+
+  <!-- KORAK 12 -->
+  <div class="ss-step"><div class="ss-step-n">12</div> Rollback na checkpoint</div>
+  <p>Ako iteracija pođe naopako — Agent uvede novu grešku ili aplikacija prestane raditi — rollback na checkpoint vraća sve u ispravno stanje. Kliknite na ikonu checkpointa u Agent panelu, pronađite željenu verziju u listi i kliknite <strong>Rollback</strong>.</p>
+  <div class="ss-wrap">
+    <img src="Screenshot%202026-04-07%20at%2005.44.26.png" alt="Rollback na checkpoint" loading="lazy">
+    <div class="ss-cap">Modal za rollback prikazuje screenshot aplikacije u tom trenutku i listu datoteka koje će se vratiti. Rollback je siguran — ne gubi se ništa osim izmjena napravljenih nakon tog checkpointa.</div>
+  </div>
+
+  <div class="callout ok">
+    <div class="callout-icon">✅</div>
+    <div class="callout-body"><strong>Sažetak naučenog</strong><p>U ovom projektu ste prošli: pisanje prompta s API URL-om, autonomnu gradnju, iteraciju dizajna kroz Canvas mode, Plan mode za dijagnozu grešaka, testiranje na mobilnim uređajima i rollback na checkpoint. Sve ove vještine primjenjuju se na svaki projekt koji ćete graditi u Replitu.</p></div>
+  </div>
+</section>
+
+<!-- S4 -->
+<section class="sec" id="s4">
+  <div class="sec-hdr">
+    <div class="sec-num">4</div>
+    <div class="sec-ttl"><h2>Kviz iz školskog predmeta</h2><p>Iterativno građenje — primjer za samostalan rad</p></div>
+  </div>
+
+  <p>Ovaj projekt funkcionalno je sličan interaktivnim kvizovima koje smo ranije gradili pomoću <strong>Claude Artefakata</strong>. Temeljna razlika: aplikacija u Replitu dobiva vlastitu javnu adresu na internetu — URL koji možete podijeliti s učenicima ili kolegama, neovisno o Claude ili ChatGPT sučelju.</p>
+  <p>Primjer demonstrira <strong>iterativno građenje</strong> — dodajete funkcije korak po korak, svaki put provjeravate rezultat i spremate checkpoint.</p>
+
+  <h4>Korak 1 — Osnova</h4>
+  <div class="prompt">
+    <div class="prompt-lbl">✏️ Upišite u Agent chat</div>
+    <div class="prompt-txt">Napravi web kviz s 5 pitanja iz [VAŠ PREDMET].
+Svako pitanje neka ima 4 ponuđena odgovora (A, B, C, D).
+Nakon odabira odgovora odmah pokaži je li točan ili netočan.
+Svi tekstovi na hrvatskom jeziku.</div>
+  </div>
+
+  <h4>Korak 2 — Dodajte bodovanje</h4>
+  <div class="prompt">
+    <div class="prompt-lbl">✏️ Nastavak — nakon checkpointa</div>
+    <div class="prompt-txt">Dodaj bodovanje: za svaki točan odgovor 1 bod.
+Na kraju kviza prikaži ukupan rezultat (npr. "Postigao si 4/5 bodova!")
+i kratku poruku ovisno o rezultatu.</div>
+  </div>
+
+  <h4>Korak 3 — Timer (opcionalno)</h4>
+  <div class="prompt">
+    <div class="prompt-lbl">✏️ Opcionalni korak</div>
+    <div class="prompt-txt">Dodaj odbrojavanje od 30 sekundi po pitanju.
+Ako istekne vrijeme, pitanje se automatski označi kao netočno i prijeđi na sljedeće.</div>
+  </div>
+
+  <div class="callout tip">
+    <div class="callout-icon">📌</div>
+    <div class="callout-body"><strong>Checkpoint savjet</strong><p>Napravite checkpoint <strong>nakon svakog koraka koji radi</strong>. Ako korak 3 pokvari nešto iz koraka 2, možete se odmah vratiti na checkpoint između njih.</p></div>
+  </div>
+</section>
+
+<!-- S5 -->
+<section class="sec" id="s5">
+  <div class="sec-hdr">
+    <div class="sec-num">5</div>
+    <div class="sec-ttl"><h2>Napredni projekti</h2><p>Za samostalno istraživanje — dva API-ja i više</p></div>
+  </div>
+
+  <h3>🌤 Vremenska prognoza za Hrvatske gradove</h3>
+  <p>Ovaj projekt kombinira <strong>dva API-ja</strong> — Nominatim pretvara ime grada u koordinate, Open-Meteo dohvaća vremenski podatke za te koordinate.</p>
+
+  <h4>Testirajte API-je unaprijed</h4>
+  <div class="url-pill">https://nominatim.openstreetmap.org/search?q=Pula,Croatia&amp;format=json&amp;limit=1</div>
+  <div class="url-pill">https://api.open-meteo.com/v1/forecast?latitude=44.87&amp;longitude=13.85&amp;current_weather=true</div>
+
+  <div class="prompt">
+    <div class="prompt-lbl">✏️ Agent chat</div>
+    <div class="prompt-txt">Napravi web aplikaciju za vremensku prognozu hrvatskih gradova.
+
+Korisnik upisuje naziv hrvatskog grada u polje za unos.
+1. Nominatim API za geocoding (grad → koordinate):
+   https://nominatim.openstreetmap.org/search?q=GRAD,Croatia&format=json&limit=1
+2. Open-Meteo API za prognozu:
+   https://api.open-meteo.com/v1/forecast?latitude=LAT&longitude=LON&current_weather=true&daily=temperature_2m_max,temperature_2m_min,precipitation_sum&timezone=Europe/Zagreb
+
+Prikaži: trenutna temperatura i vjetar, prognoza za 3 dana, ikone za sunčano/oblačno/kišovito.
+Defaultni grad: Zagreb. Dizajn: moderan, plavo-bijeli, svi tekstovi na hrvatskom.</div>
+  </div>
+
+  <hr class="div">
+
+  <h3>🌍 Dashboard: Hrvatska i susjedi</h3>
+  <p>Aplikacija koja uspoređuje Hrvatsku sa susjednim zemljama koristeći REST Countries API.</p>
+
+  <div class="url-pill">https://restcountries.com/v3.1/alpha?codes=HR,SI,HU,RS,BA,ME</div>
+
+  <div class="prompt">
+    <div class="prompt-lbl">✏️ Agent chat</div>
+    <div class="prompt-txt">Napravi interaktivni dashboard koji uspoređuje Hrvatsku sa susjednim zemljama.
+
+Koristi REST Countries API:
+https://restcountries.com/v3.1/alpha?codes=HR,SI,HU,RS,BA,ME
+
+Prikaži:
+- Tablicu: zemlja, glavni grad, populacija, površina, valuta, jezici
+- Stupčasti grafikon: populacija po zemljama
+- Grafikon: površina po zemljama
+- Slike zastava (API vraća flag URL-ove)
+Sve oznake i naslovi na hrvatskom jeziku. Moderan, responzivan dizajn.</div>
+  </div>
+</section>
+
+<!-- S6 -->
+<section class="sec" id="s6">
+  <div class="sec-hdr">
+    <div class="sec-num acc">6</div>
+    <div class="sec-ttl"><h2>Javni API-jevi za nastavu</h2><p>10 provjerenih besplatnih izvora podataka — bez registracije</p></div>
+  </div>
+
+  <p>Svi API-jevi rade direktno u pregledniku — zalijepite URL i vidite podatke. Za testiranje: otvorite URL u novom tabu i vidjet ćete JSON podatke koji će hraniti vašu aplikaciju.</p>
+
+  <div class="callout ok">
+    <div class="callout-icon">✅</div>
+    <div class="callout-body"><strong>Što znači „bez API ključa"?</strong><p>Većina web servisa zahtijeva registraciju i poseban ključ za pristup. API-jevi u ovom vodiču ne trebaju ništa od toga — samo otvorite URL i podaci su dostupni. Savršeno za nastavu.</p></div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#1D5FA3,#2E7AC0)"><span class="api-name">🌤 Open-Meteo</span><span class="api-badge">Preporučeno</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span><a href="https://open-meteo.com" target="_blank">open-meteo.com</a></span> · 🔑 <span>Bez ključa</span> · ⚡ <span>Bez limita (nekomercijalno)</span></div>
+      <div class="api-desc">Vremenski podaci za bilo koji grad — temperatura, vjetar, vlažnost, prognoza 7 dana. Zagreb (45.81, 15.98), Split (43.51, 16.44), Pula (44.87, 13.85).</div>
+      <div class="tags"><span class="tag">Geografija</span><span class="tag">Priroda i društvo</span><span class="tag acc">Matematika</span></div>
+      <div class="url-pill">https://api.open-meteo.com/v1/forecast?latitude=45.81&longitude=15.98&current_weather=true</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">Usporedba temperature u različitim gradovima Hrvatske u realnom vremenu. Crtanje grafa temperature kroz tjedan — matematika u praksi.</div></div>
+    </div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#C96A30,#E07840)"><span class="api-name">📅 Nager.Date</span><span class="api-badge">100+ zemalja</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span><a href="https://date.nager.at" target="_blank">date.nager.at</a></span> · 🔑 <span>Bez ključa</span> · ⚡ <span>Bez limita</span></div>
+      <div class="api-desc">Popis javnih blagdana za 100+ zemalja s lokalnim nazivima. Za Hrvatsku vraća datum, naziv na hrvatskom, vrstu blagdana.</div>
+      <div class="tags"><span class="tag">Povijest</span><span class="tag">Građanski odgoj</span><span class="tag acc">Matematika</span></div>
+      <div class="url-pill">https://date.nager.at/api/v3/PublicHolidays/2026/HR</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">Usporedba blagdana susjednih zemalja. Odbrojavanje do sljedećeg blagdana — matematika: razlika datuma.</div></div>
+    </div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#2A8B8B,#34AAAA)"><span class="api-name">🌍 REST Countries</span><span class="api-badge">250 zemalja</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span><a href="https://restcountries.com" target="_blank">restcountries.com</a></span> · 🔑 <span>Bez ključa</span> · ⚡ <span>4M+ zahtjeva dnevno</span></div>
+      <div class="api-desc">Enciklopedija svih zemalja: zastava, populacija, površina, glavni grad, valuta, jezici, susjedne države.</div>
+      <div class="tags"><span class="tag">Geografija</span><span class="tag acc">Matematika</span><span class="tag">Strani jezici</span></div>
+      <div class="url-pill">https://restcountries.com/v3.1/name/croatia</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">Kviz o zastavama: prikaži zastavu, pogodi zemlju. Usporedba populacija europskih zemalja u grafu.</div></div>
+    </div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#2E7D52,#3A9E68)"><span class="api-name">🎮 PokeAPI</span><span class="api-badge">Djeca ❤️</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span><a href="https://pokeapi.co" target="_blank">pokeapi.co</a></span> · 🔑 <span>Bez ključa</span> · ⚡ <span>50B+ poziva/mj</span></div>
+      <div class="api-desc">Kompletna baza Pokémon podataka: ime, slika, visina, težina, tipovi, bazne statistike (HP, napad, obrana, brzina).</div>
+      <div class="tags"><span class="tag acc">Matematika (grafovi, prosjeci)</span><span class="tag">Priroda</span><span class="tag">Informatika</span></div>
+      <div class="url-pill">https://pokeapi.co/api/v2/pokemon/pikachu</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">Pokédex za razred: traženje Pokémona po imenu, prikaz slike i statistika. Koji je najjači/najbrži?</div></div>
+    </div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#334155,#475569)"><span class="api-name">📚 Open Library</span><span class="api-badge">Knjige</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span><a href="https://openlibrary.org/developers/api" target="_blank">openlibrary.org</a></span> · 🔑 <span>Bez ključa</span></div>
+      <div class="api-desc">Pretraživanje milijuna knjiga: naslov, autor, godina izdanja, ISBN, naslovnica.</div>
+      <div class="tags"><span class="tag">Hrvatski jezik</span><span class="tag">Strani jezici</span><span class="tag">Knjižnična kultura</span></div>
+      <div class="url-pill">https://openlibrary.org/search.json?q=harry+potter&limit=5</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">Digitalna polica za lektiru: učenik upisuje naslov, aplikacija prikazuje naslovnicu, autora i godinu.</div></div>
+    </div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#1D4ED8,#3B82F6)"><span class="api-name">📖 Hrvatska Wikipedija API</span><span class="api-badge">HR sadržaj</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span>hr.wikipedia.org</span> · 🔑 <span>Bez ključa</span> · ⚡ <span>200 zahtjeva/s</span></div>
+      <div class="api-desc">Sažetak bilo kojeg Wikipedijinog članka na hrvatskom: naslov, opis, tekst, sličica.</div>
+      <div class="tags"><span class="tag">Svi predmeti</span><span class="tag">Priroda</span><span class="tag">Hrvatski jezik</span></div>
+      <div class="url-pill">https://hr.wikipedia.org/api/rest_v1/page/summary/Zagreb</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">Digitalna enciklopedija: učenik upiše pojam (životinja, grad, rijeka), aplikacija dohvaća sažetak s HR Wikipedije sa slikom.</div></div>
+    </div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#0F172A,#1E3A5F)"><span class="api-name">🚀 NASA Image Library</span><span class="api-badge">Bez ključa!</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span><a href="https://images-api.nasa.gov" target="_blank">images-api.nasa.gov</a></span> · 🔑 <span>Bez ključa (APOD: DEMO_KEY)</span></div>
+      <div class="api-desc">NASA-ina knjižnica slika i videa — milijuni fotografija svemira. APOD (slika dana) koristi DEMO_KEY: 30 zahtjeva/sat, bez registracije.</div>
+      <div class="tags"><span class="tag">Priroda (svemir)</span><span class="tag">Geografija</span><span class="tag">Likovna kultura</span></div>
+      <div class="url-pill">https://images-api.nasa.gov/search?q=moon</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">Svemirski istraživač: svaki dan nova NASA slika s opisom. Galerija fotografija Marsa ili Saturna.</div></div>
+    </div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#7C3AED,#A855F7)"><span class="api-name">🔢 Numbers API</span><span class="api-badge">Matematika</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span><a href="http://numbersapi.com" target="_blank">numbersapi.com</a></span> · 🔑 <span>Bez ključa</span></div>
+      <div class="api-desc">Zanimljive činjenice o brojevima — matematičke, trivia, godišnje i datumske.</div>
+      <div class="tags"><span class="tag acc">Matematika</span><span class="tag">Povijest</span></div>
+      <div class="url-pill">http://numbersapi.com/42/math</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">„Broj dana" — svaki sat nova matematička činjenica. Učenici unose datum rođenja i dobivaju povijesnu činjenicu za taj dan.</div></div>
+    </div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#B45309,#D97706)"><span class="api-name">💶 Frankfurter (tečajne liste)</span><span class="api-badge">160+ valuta</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span><a href="https://frankfurter.dev" target="_blank">frankfurter.dev</a></span> · 🔑 <span>Bez ključa</span> · ⚡ <span>Bez limita</span></div>
+      <div class="api-desc">Tečajevi 160+ valuta prema EUR-u. Podaci iz 30+ središnjih banaka, ažurirani svaki radni dan.</div>
+      <div class="tags"><span class="tag acc">Matematika</span><span class="tag">Geografija (valute)</span><span class="tag">Ekonomija</span></div>
+      <div class="url-pill">https://api.frankfurter.dev/v2/rates</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">Kalkulator valuta: učenici unose iznos u eurima i biraju valutu. Množenje s decimalnim brojevima u realnom kontekstu.</div></div>
+    </div>
+  </div>
+
+  <div class="api-card">
+    <div class="api-hdr" style="background:linear-gradient(90deg,#0F766E,#14B8A6)"><span class="api-name">🐕 Dog CEO API</span><span class="api-badge">120+ pasmina</span></div>
+    <div class="api-body">
+      <div class="api-meta">🔗 <span><a href="https://dog.ceo/dog-api/" target="_blank">dog.ceo/dog-api</a></span> · 🔑 <span>Bez ključa</span> · ⚡ <span>20.000+ slika</span></div>
+      <div class="api-desc">Nasumične fotografije pasa po pasmini. Idealan za prve demonstracije dohvaćanja podataka — jedan poziv vraća URL slike.</div>
+      <div class="tags"><span class="tag">Priroda (životinje)</span><span class="tag">Biologija</span></div>
+      <div class="url-pill">https://dog.ceo/api/breeds/image/random</div>
+      <div class="idea"><div class="idea-lbl">💡 Ideja za nastavu</div><div class="idea-txt">Galerija pasmina pasa za sat prirode. Svaki klik prikazuje novu fotografiju. Odlično za prvu demonstraciju API-ja djeci.</div></div>
+    </div>
+  </div>
+
+  <hr class="div">
+  <h3>🇭🇷 Hrvatski i europski otvoreni podaci</h3>
+  <div class="two-col">
+    <div class="card c-pri"><div class="card-icon">🏛️</div><h4>data.gov.hr — Otvoreni podaci RH</h4><p>Tisući dataseta o školama, gradovima, prometnicama, demografiji. Preuzimanje CSV/JSON je besplatno.</p><div class="url-pill" style="margin-top:8px;font-size:11px">https://data.gov.hr</div></div>
+    <div class="card c-teal"><div class="card-icon">🇪🇺</div><h4>Eurostat API — EU statistika</h4><p>Besplatan REST API s demografskim i obrazovnim podacima za sve EU članice. Filtrirajte s <code>geo=HR</code>.</p><div class="url-pill" style="margin-top:8px;font-size:11px">https://ec.europa.eu/eurostat</div></div>
+  </div>
+</section>
+
+<!-- S7 -->
+<section class="sec" id="s7">
+  <div class="sec-hdr">
+    <div class="sec-num teal">7</div>
+    <div class="sec-ttl"><h2>Kako pronaći nove izvore podataka</h2><p>Alati i tehnike za samostalno istraživanje</p></div>
+  </div>
+
+  <p>Kad razumijete što je API i kako ga koristiti, evo kako pronaći nove izvore za bilo koji predmet ili temu koja vas zanima.</p>
+
+  <h3>Metoda 1: GitHub public-apis lista</h3>
+  <div class="callout info">
+    <div class="callout-icon">📋</div>
+    <div class="callout-body"><strong>Najkorisniji resurs</strong><p>Repozitorij <a href="https://github.com/public-apis/public-apis" target="_blank">github.com/public-apis/public-apis</a> — kurirana lista s 400+ besplatnih API-jeva u 48 kategorija. Više od 419.000 GitHub zvjezdica.</p></div>
+  </div>
+  <ul class="steps">
+    <li class="step"><div class="step-n">1</div><div><div class="step-ttl">Otvorite stranicu i koristite Ctrl+F</div><div class="step-desc">Potražite svoju kategoriju: „weather", „science", „animals", „books", „music"...</div></div></li>
+    <li class="step"><div class="step-n">2</div><div><div class="step-ttl">Filtrirajte po stupcu „Auth"</div><div class="step-desc">Tražite <strong>No</strong> u stupcu Auth — bez API ključa. HTTPS treba biti Da, CORS treba biti Yes.</div></div></li>
+    <li class="step"><div class="step-n">3</div><div><div class="step-ttl">Kliknite link i otvorite dokumentaciju</div><div class="step-desc">Svaki unos ima link na dokumentaciju s konkretnim URL-ovima za testiranje.</div></div></li>
+  </ul>
+
+  <h3>Metoda 2: Testiranje u pregledniku</h3>
+  <p>Zalijepite URL u adresnu traku. Ako vidite tekst koji počinje s <code>{</code> ili <code>[</code> — API radi.</p>
+  <div class="two-col">
+    <div class="card c-pri"><div class="card-icon">🦊</div><h4>Firefox</h4><p>Ima ugrađen JSON viewer koji automatski formatira i oboji odgovor bez ekstenzija.</p></div>
+    <div class="card c-acc"><div class="card-icon">🌐</div><h4>Chrome / Edge</h4><p>Instalirajte besplatnu ekstenziju <strong>„JSON Viewer"</strong> iz Chrome Web Storea.</p></div>
+  </div>
+
+  <h3>Metoda 3: Pitajte Replit Agent</h3>
+  <div class="prompt">
+    <div class="prompt-lbl">✏️ Primjer prompta</div>
+    <div class="prompt-txt">Trebam besplatan API koji ne zahtijeva registraciju niti API ključ,
+a koji daje podatke o [TEMA].
+Preporuči 2-3 opcije s primjerima URL-ova koje mogu testirati u pregledniku.</div>
+  </div>
+
+  <h3>Korisni direktoriji</h3>
+  <table class="tbl">
+    <thead><tr><th>Resurs</th><th>Sadržaj</th><th>Posebnost</th></tr></thead>
+    <tbody>
+      <tr><td><a href="https://github.com/public-apis/public-apis" target="_blank">GitHub public-apis</a></td><td>400+ API-jeva u 48 kategorija</td><td>Filter Auth=No</td></tr>
+      <tr><td><a href="https://www.freepublicapis.com" target="_blank">freepublicapis.com</a></td><td>Lista s dnevnim testiranjem</td><td>Svaki API testiran svaki dan</td></tr>
+      <tr><td><a href="https://data.gov.hr" target="_blank">data.gov.hr</a></td><td>Hrvatski otvoreni podaci</td><td>Škole, demografija, promet</td></tr>
+      <tr><td><a href="https://data.europa.eu" target="_blank">data.europa.eu</a></td><td>1,6M EU dataseta</td><td>Uključuje i hrvatske podatke</td></tr>
+      <tr><td><a href="https://ec.europa.eu/eurostat" target="_blank">Eurostat</a></td><td>EU statistika s API-jem</td><td>Filtrirajte s geo=HR</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- S8 -->
+<section class="sec" id="s8">
+  <div class="sec-hdr">
+    <div class="sec-num acc">8</div>
+    <div class="sec-ttl"><h2>Resursi i daljnje učenje</h2><p>Dokumentacija, tečajevi i ideje za primjenu</p></div>
+  </div>
+
+  <h3>Replit — službena dokumentacija</h3>
+  <div class="card-grid">
+    <div class="card c-pri"><div class="card-icon">🤖</div><h4>Replit Agent</h4><p>Što je Agent, koji su modovi dostupni (Lite, Autonomous, Max), kako se upravlja kreditima.</p><a href="https://docs.replit.com/core-concepts/agent" target="_blank">docs.replit.com/core-concepts/agent →</a></div>
+    <div class="card c-acc"><div class="card-icon">🗺️</div><h4>Plan Mode</h4><p>Kako se aktivira, što Agent smije i ne smije, kako prebaciti u Build mod i kada koristiti svaki.</p><a href="https://docs.replit.com/core-concepts/agent/plan-mode" target="_blank">docs.replit.com/core-concepts/agent/plan-mode →</a></div>
+    <div class="card c-teal"><div class="card-icon">✨</div><h4>Kako efektivno vibe codirati</h4><p>Od ideje do objavljene aplikacije — dobri promptovi, iterativni razvoj, checkpointi, greške početnika.</p><a href="https://docs.replit.com/tutorials/how-to-vibe-code" target="_blank">docs.replit.com/tutorials/how-to-vibe-code →</a></div>
+    <div class="card c-green"><div class="card-icon">💬</div><h4>Efektivno promptanje</h4><p>Vodič za pisanje boljih promptova specifično za Replit Agent — s primjerima dobrih i loših pristupa.</p><a href="https://docs.replit.com/tutorials/effective-prompting" target="_blank">docs.replit.com/tutorials/effective-prompting →</a></div>
+  </div>
+
+  <h3>Tečajevi</h3>
+  <div class="card-grid">
+    <div class="card c-pri"><div class="card-icon">🎓</div><h4>Replit Learn Portal</h4><p>Strukturirani tečajevi direktno na platformi. Počnite s <em>„Master AI &amp; Vibe Coding"</em> modulom.</p><a href="https://learn.replit.com" target="_blank">learn.replit.com →</a></div>
+    <div class="card c-acc"><div class="card-icon">📚</div><h4>Vibe Coding 101 — DeepLearning.AI</h4><p>Besplatni tečaj u suradnji Replita i DeepLearning.AI. Pokriva svih 5 vještina vibe codinga. Na engleskom.</p><a href="https://www.deeplearning.ai/short-courses/vibe-coding-101-with-replit/" target="_blank">deeplearning.ai →</a></div>
+  </div>
+
+  <hr class="div">
+
+  <h3>Ideje za primjenu s učenicima</h3>
+  <div class="card-grid">
+    <div class="card c-pri"><div class="card-icon">🧪</div><h4>Predmetni istraživački alati</h4><p>Učenici (13+) grade vlastite istraživačke aplikacije — Wikipedia API za prirodu, REST Countries za geografiju, Numbers API za matematiku.</p></div>
+    <div class="card c-acc"><div class="card-icon">🎮</div><h4>Kvizovi za ponavljanje</h4><p>Svaki učenik gradi kviz za kolege iz svog poglavlja. Razmjena kvizova između razreda stvara prirodnu motivaciju za kvalitetu.</p></div>
+    <div class="card c-teal"><div class="card-icon">📊</div><h4>Projektni dashboardi</h4><p>Za projektnu nastavu: učenici grade vizualizaciju podataka svog istraživanja — od tablica do interaktivnih grafova.</p></div>
+  </div>
+
+  <hr class="div">
+
+  <h3>Vibe Coding Liga — nastavak</h3>
+  <p>Ovaj vodič dio je programa <strong>Vibe Coding Lige</strong> — natjecanja u 52 škole diljem Hrvatske u kojemu učenici koriste iste alate da grade aplikacije za rješavanje stvarnih problema.</p>
+
+  <div class="callout tip">
+    <div class="callout-icon">⚡</div>
+    <div class="callout-body"><strong>Vaša misija</strong><p>Napravite jednu aplikaciju koja je korisna u vašoj nastavi — kviz, enciklopediju, kalkulator, vizualizaciju podataka. Podijelite URL s kolegama. Svaka aplikacija koja nastane dokaz je da vibe coding funkcionira i da učitelji mogu biti pioniri promjene u obrazovanju.</p></div>
+  </div>
+
+</section>
+
+</main>
+
+<script>
+const secs = document.querySelectorAll('.sec');
+const links = document.querySelectorAll('.nav-a');
+const obs = new IntersectionObserver(e => {
+  e.forEach(en => { if(en.isIntersecting) { const id=en.target.id; links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+id)); }});
+}, {threshold: 0.25});
+secs.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
